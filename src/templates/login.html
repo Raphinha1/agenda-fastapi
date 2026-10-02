@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Ingresar a Mi Agenda{% endblock %}
+{% block content %}
+<section class="login-card">
+  <p class="eyebrow">Acceso a la agenda</p>
+  <h1>Iniciar sesión</h1>
+  <p>Ingresa con un usuario registrado en la API.</p>
+  {% if error %}<p class="alert" role="alert">{{ error }}</p>{% endif %}
+  <form action="/views/login" method="post" class="form-grid">
+    <label>Usuario<input name="username" autocomplete="username" required></label>
+    <label>Contraseña<input name="password" type="password" autocomplete="current-password" required></label>
+    <button class="button" type="submit">Ingresar</button>
+  </form>
+  <p class="helper">¿Aún no tienes cuenta? Regístrate desde <a href="/docs">la documentación interactiva</a> con <code>POST /auth/register</code>.</p>
+</section>
+{% endblock %}

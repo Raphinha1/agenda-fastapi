@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Mis contactos{% endblock %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">Bienvenido, {{ user.username }}</p><h1>Mis contactos</h1><p>Los registros de tu agenda solo son visibles para tu cuenta.</p></div><span class="count">{{ contactos|length }} {{ 'registro' if contactos|length == 1 else 'registros' }}</span></div>
+<section class="panel" aria-labelledby="new-contact-title">
+  <h2 id="new-contact-title">Agregar contacto</h2>
+  {% if error %}<p class="alert" role="alert">{{ error }}</p>{% endif %}
+  <form action="/views/agenda" method="post" class="contact-form">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Nombre<input name="nombre" minlength="2" maxlength="50" required></label>
+    <label>Teléfono<input name="telefono" inputmode="numeric" pattern="[0-9]{7,15}" title="Entre 7 y 15 dígitos" required></label>
+    <label>Correo<input name="mail" type="email" required></label>
+    <button class="button" type="submit">Guardar contacto</button>
+  </form>
+</section>
+<section class="panel" aria-labelledby="contacts-title">
+  <h2 id="contacts-title">Lista de contactos</h2>
+  {% if contactos %}
+  <div class="table-wrap"><table><thead><tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Correo</th></tr></thead><tbody>
+    {% for c in contactos %}<tr><td>#{{ c.id }}</td><td>{{ c.nombre }}</td><td>{{ c.telefono }}</td><td><a href="mailto:{{ c.mail }}">{{ c.mail }}</a></td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<p class="empty">Todavía no tienes contactos. Agrega el primero con el formulario.</p>{% endif %}
+</section>
+{% endblock %}
